@@ -1,167 +1,232 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>User Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
         }
-        
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-        
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .form-row {
+
+        .wrapper {
             display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        
-        .form-group {
+
+        .container {
+            display: flex;
             flex: 1;
         }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #34495e;
+
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .top-right a {
+            text-decoration: none;
+            color: black;
             font-weight: bold;
         }
-        
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-            margin-bottom: 15px;
+
+        .sidebar {
+            background-color: white;
+            width: 250px;
+            padding-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            border-right: 1px solid #ccc;
         }
-        
-        .edit-btn {
-            background: none;
-            border: none;
-            color: #3498db;
+
+        .sidebar img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-btn {
+            width: 80%;
+            padding: 20px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            border: 2px solid black;
+            background-color: white;
+            border-radius: 10px;
             cursor: pointer;
-            padding: 0;
-            margin-left: 10px;
-        }
-        
-        .edit-btn:hover {
-            text-decoration: underline;
-        }
-        
-        .btn-primary {
-            background-color: #3498db;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #2c3e50;
-            color: white;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        
-        .footer a {
-            color: white;
             text-decoration: none;
-            margin: 0 10px;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
         }
-        
-        .success-message {
-            color: #27ae60;
+
+        .sidebar-btn .icon {
+            margin-right: 15px;
+            font-size: 22px;
+        }
+
+        .sidebar-btn.active {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .sidebar-btn:hover {
+            background-color: #e6e6e6;
+        }
+
+        .content {
+            flex: 1;
+            padding: 60px 40px;
+            background-color: #fff;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .form-pair {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .edit-btn {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
             padding: 10px;
-            margin: 15px 0;
-            background-color: #e8f6ef;
-            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            border-top: 1px solid #ccc;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #777;
+            background-color: white;
         }
     </style>
 </head>
 <body>
+<div class="wrapper">
+    <div class="top-right">
+        <span style="font-size: 20px;">⏎</span>
+        <a href="#">Sign Out</a>
+    </div>
+
     <div class="container">
-        <h1 class="dashboard-header">Your Dashboard</h1>
-        <p class="dashboard-subheader">Manage your profile settings here</p>
+        <div class="sidebar">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Sky_UK_logo_2020.svg/2560px-Sky_UK_logo_2020.svg.png" alt="Logo">
+            <a href="#" class="sidebar-btn active">
+                <span class="icon">👤</span> Profile Settings
+            </a>
+            <a href="#" class="sidebar-btn">
+                <span class="icon">☰</span> Voting Sessions
+            </a>
+            <a href="#" class="sidebar-btn">
+                <span class="icon">📈</span> View Team Summary
+            </a>
+        </div>
 
-        {% if success_message %}
-            <div class="success-message">{{ success_message }}</div>
-        {% endif %}
+        <div class="content">
+            <h1>Your Dashboard</h1>
+            <p>Manage your profile settings here</p>
 
-        <div class="card">
-            <h2>Profile Information</h2>
             <form method="POST">
                 {% csrf_token %}
+
                 <div class="form-row">
-                    <div class="form-group">
-                        <label>Name:</label>
-                        {{ form.first_name }}
+                    <div class="form-pair">
+                        <label for="id_first_name">Name</label>
+                        <input type="text" id="id_first_name" name="first_name" value="Adam">
+                        <button class="edit-btn" type="submit">Edit</button>
                     </div>
-                    <div class="form-group">
-                        <label>Surname:</label>
-                        {{ form.last_name }}
+
+                    <div class="form-pair">
+                        <label for="id_last_name">Surname</label>
+                        <input type="text" id="id_last_name" name="last_name" value="Kowalski">
+                        <button class="edit-btn" type="submit">Edit</button>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label>Email address:</label>
-                    {{ form.email }}
+
+                <div class="form-row">
+                    <div class="form-pair">
+                        <label for="id_email">Email address</label>
+                        <input type="email" id="id_email" name="email" value="adam.kowalski@example.co.uk">
+                        <button class="edit-btn" type="submit">Edit</button>
+                    </div>
+
+                    <div class="form-pair">
+                        <label for="id_password">Password</label>
+                        <input type="password" id="id_password" name="password" value="**************">
+                        <button class="edit-btn" type="submit">Edit</button>
+                    </div>
                 </div>
-                
-                <h2>Team Selection</h2>
-                <div class="form-group">
-                    <select class="form-control">
-                        <option>Team A</option>
-                        <option>Team B</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="btn-primary">Update your team</button>
             </form>
-        </div>
 
-        <div class="card">
-            <h2>Security</h2>
-            <div class="form-group">
-                <label>Password:</label>
-                <input type="password" value="********" readonly>
-                <a href="#" class="edit-btn">Edit</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <a href="#" class="btn-primary" style="background-color: #e74c3c;">Sign Out</a>
+            {% if success_message %}
+                <p style="color: green;">{{ success_message }}</p>
+            {% endif %}
         </div>
     </div>
 
     <div class="footer">
-        <a href="#">Help</a>
-        <a href="#">Accessibility</a>
-        <a href="#">Privacy and Terms of Use</a>
-        <a href="#">Contact us</a>
+        Help | Accessibility | Privacy and Terms of Use | Contact us | Legal
     </div>
+</div>
 </body>
 </html>
